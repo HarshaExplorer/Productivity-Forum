@@ -1,0 +1,62 @@
+:root {
+    background-color: rgb(224, 222, 222);
+  }
+
+.layout {
+  display: flex;
+  flex-direction: column;
+}
+
+.main {
+    position: relative;
+    margin-top: 5%;
+}
+
+/* Navbar */
+.navbar {
+    height: 10%;
+    width: 100%; 
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    position: fixed; 
+    top: 0;
+    left: 0;
+    background-color: rgb(16, 165, 91); 
+    overflow-x: hidden; 
+}
+
+.searchArea {
+    height: 30px;
+    width: 30%;
+    margin-top: 20px;
+}
+
+.navLinks {
+    display: flex;
+    width: 12%;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    margin-right: 10%;
+}
+
+.navLinks a {
+    text-decoration: none;
+    font-weight: bolder;
+    padding-right: 1%;
+    font-size: 15px;
+    color: #d1d3d3;
+    display: block;
+}
+
+.navLinks a:hover {
+    color: orange;
+}
+
+.navbar h1 {
+    color: white;
+    padding-left: 2%;
+}
+/* End Navbar */
+
