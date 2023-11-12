@@ -4,67 +4,50 @@ import './App.css'
 
 function App() {
   
-  const [order, setOrder] = useState(false); // false means order by latest and true means order by most popular
-  const [filterHack, setFilterHack] = useState(0);
-  const [filterQuestion, setFilterQuestion] = useState(0);
+  const [filters, setFilters] = useState({order: false, filter: 3});
 
   const[posts, setPosts] = useState([]);
 
-  useEffect(()=>{
-   fetchAllPosts();
-  }, []);
-
   const fetchAllPosts = async () => {
-     const {data} = await supabase.from('Posts').select().order('id', { ascending: false });
+      
+      if(filters.order===false) 
+        var {data} = await supabase.from('Posts').select().order('id', {ascending: false});
+      else 
+        var {data} = await supabase.from('Posts').select().order('vote_count', {ascending: false});
 
-     setPosts(data);
+      if(filters.filter === 1)  {
+        data = data.filter((p) => {
+                 return p.is_tip;
+               });
+      }
+      else if(filters.filter === 2) {
+        data = data.filter((p) => {
+                return !p.is_tip;
+               });  
+      }
+
+      setPosts(data);
   }
 
-  function orderResults(orderType) {
-
-    if((orderType===1))
-      setOrder(false);
-    else if((orderType===2))
-      setOrder(true);
-
-     if(orderType === 2) { // order by most popular
-       console.log('Order by most popular');
-     }
-     else if (orderType === 1){ // else order by latest
-       console.log('Order by latest');
-     }
-  }
-
-  function filterByHack() {
-    setFilterHack((filterHack===0)?(1):(0));
-
-    if(filterHack===0) { 
-      console.log('Filter by hack!');
-    }
-  }
-
-  function filterByQuestion() {
-    setFilterQuestion((filterQuestion===0)?(1):(0));
-
-    if(filterQuestion===0) { 
-      console.log('Filter by question!');
-    }
-  }
-
+  useEffect(()=>{
+    fetchAllPosts();
+   }, [filters]);
+ 
   return (
     <>
         <div className='main'>
            <div className='filters'>
               <div className='filter-item'>
                   <h4>Order By: </h4>
-                  <button id="latest-filter" className={order ? ('filter-released'):('filter-selected')} onClick={()=>{orderResults(1);}} >Latest</button>
-                  <button id="popular-filter" className={order ? ('filter-selected'):('filter-released')} onClick={()=>{orderResults(2);}} >Most Popular</button>
+                  <button id="latest-filter" className={(filters.order) ? ('filter-released'):('filter-selected')} onClick={()=>{setFilters({order: false, filter: filters.filter});}} >Latest</button>
+                  <button id="popular-filter" className={(filters.order) ? ('filter-selected'):('filter-released')} onClick={()=>{setFilters({order: true, filter: filters.filter});}} >Most Popular</button>
               </div>
 
               <div className='filter-item'>
                   <h4>Filter By: </h4>
-                  <button className={filterHack===0 ? ('filter-released'):('filter-selected')} onClick={()=>{filterByHack();}} >Hacks</button>
-                  <button className={filterQuestion===0 ? ('filter-released'):('filter-selected')} onClick={()=>{filterByQuestion();}} >Questions</button>
+                  <button className={(filters.filter == 1) ? ('filter-selected'):('filter-released')} onClick={()=>{setFilters({order: filters.order, filter: 1});}} >Hacks</button>
+                  <button className={(filters.filter == 2) ? ('filter-selected'):('filter-released')} onClick={()=>{setFilters({order: filters.order, filter: 2});}} >Questions</button>
+                  <button className={(filters.filter == 3) ? ('filter-selected'):('filter-released')} onClick={()=>{setFilters({order: filters.order, filter: 3});}} >All</button>
               </div>
 
            </div>
@@ -79,7 +62,7 @@ function App() {
                   return (
                     <div key={P.id} className='card'> 
                        <p>Posted {(days>0) ? (days+" days ago") : ((hrs>0)?(hrs+" hours ago"):((mins>0)?(mins+" minutes ago"):("Now"))) }</p>
-                       <h3>{P.title}</h3>
+                       <h2>{P.title}</h2>
                        <p> <b>Flaged as: </b>{(P.is_tip) ? ("Productivity Hack"):("Question")}</p>
                        <p>{P.vote_count} ⬆️ upvotes</p>
                     </div>

@@ -21,9 +21,9 @@
     flex-direction: column;
     position: relative;
     margin-top: 10%;
-    margin-left: 20%;
+    margin-left: 10%;
     height: 600px;
-    width: auto;
+    width: 100%;
     overflow-y: scroll;
     overflow-x: hidden;
 }
