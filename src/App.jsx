@@ -1,19 +1,24 @@
 import { useState, useEffect } from 'react'
+import { Link } from "react-router-dom";
 import { supabase } from './client.js';
+import LoadingGIF from './assets/loading.gif'
 import './App.css'
 
 function App() {
   
-  const [filters, setFilters] = useState({order: false, filter: 3});
+  var prevSearch = "";
+  const [filters, setFilters] = useState({order: false, filter: 3, searchQuery: prevSearch});
 
   const[posts, setPosts] = useState([]);
 
   const fetchAllPosts = async () => {
       
-      if(filters.order===false) 
-        var {data} = await supabase.from('Posts').select().order('id', {ascending: false});
-      else 
-        var {data} = await supabase.from('Posts').select().order('vote_count', {ascending: false});
+      if(filters.order===false) {
+           var {data} = await supabase.from('Posts').select().order('created_at', {ascending: false});
+      }
+      else {
+            var {data} = await supabase.from('Posts').select().order('vote_count', {ascending: false});
+      }
 
       if(filters.filter === 1)  {
         data = data.filter((p) => {
@@ -26,12 +31,30 @@ function App() {
                });  
       }
 
+      if(filters.searchQuery){
+         data = data.filter((p) => {
+               return (p.title.toLowerCase()).includes(filters.searchQuery);
+         });
+      }
+      
       setPosts(data);
   }
+  
+  function setPrevSearch(s) {
+     prevSearch = s;
+  }
+
+  useEffect(()=>{
+    document.getElementById('searchBar').addEventListener('input', (e)=>{
+      setPrevSearch((e.target.value).trim().toLowerCase());
+      setFilters({order: filters.order, filter: filters.filter, searchQuery: prevSearch});
+    });
+  }, []);
 
   useEffect(()=>{
     fetchAllPosts();
    }, [filters]);
+
  
   return (
     <>
@@ -53,19 +76,25 @@ function App() {
            </div>
 
            <div className='gallery'>
+            {posts.length==0 &&
+                <img src={LoadingGIF}/>
+            }
+
            {posts.length!=0 && 
                posts.map((P) => {
-                  let date = Date.parse(P.created_at);
-                  let mins = Math.floor((Date.now() - date)/(60*1000));
+                  let date = new Date(parseFloat(P.created_at));
+                  let mins = Math.floor((Date.now() - date.getTime())/(60*1000));
                   let hrs = Math.floor(mins / 60), days = Math.floor(hrs/24);
 
                   return (
-                    <div key={P.id} className='card'> 
+                    <Link key={P.id} to={`/view/${P.id}`}>
+                     <div  className='card'> 
                        <p>Posted {(days>0) ? (days+" days ago") : ((hrs>0)?(hrs+" hours ago"):((mins>0)?(mins+" minutes ago"):("Now"))) }</p>
                        <h2>{P.title}</h2>
                        <p> <b>Flaged as: </b>{(P.is_tip) ? ("Productivity Hack"):("Question")}</p>
                        <p>{P.vote_count} ⬆️ upvotes</p>
-                    </div>
+                     </div>
+                    </Link>
                   )
                })
 
@@ -78,4 +107,4 @@ function App() {
   )
 }
 
-export default App
+export default App;

@@ -10,11 +10,11 @@ const CreatePost = () => {
         let imageURL = document.getElementById('image').value;
         let secret = document.getElementById('secret').value;
         let flag = (document.getElementsByName('flag')[0].checked) ? (true) : (false);
+        let date = new Date();
+            date = "" + date.getTime();
          
-        await supabase.from('Posts')
-                      .insert({title: title, content:content, img_url: imageURL, secret_key: secret, is_tip: flag})
-                      .select();
-
+        await supabase.from('Posts').insert({created_at: date, title: title, content:content, img_url: imageURL, secret_key: secret, is_tip: flag});
+        
         window.location = '/';
     }
 
@@ -26,7 +26,7 @@ const CreatePost = () => {
              <input id="title" type="text" placeholder="Title" required/>
              <textarea id="content" rows="10" cols="60" placeholder="Content (Optional)"/>
              <input id="image" type="text" placeholder="Image URL (Optional)"/>
-             <input id="secret" type="text" placeholder="Secret Key" required minLength={5}/>
+             <input id="secret" type="password" placeholder="Secret Key" required minLength={5}/>
              
              <div className="flag-area">
                <h4>Flag As: </h4> &nbsp;
@@ -36,7 +36,7 @@ const CreatePost = () => {
                <label htmlFor="question">Question</label> <br />
              </div>
 
-             <input id="form-submit" type="submit" value={"Post Now"}/>
+             <input id="form-submit" type="submit" value={"Submit"}/>
            </form>
           </div>
        </div>
