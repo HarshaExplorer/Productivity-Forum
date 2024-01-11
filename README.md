@@ -1,4 +1,4 @@
-# *Productivity Club*
+# *Productivity Forum*
 
 Created By: **Harshavardan Yuvaraj**
 
