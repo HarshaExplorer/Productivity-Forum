@@ -1,8 +1,8 @@
 # *Productivity Forum*
 
-Created By: **Harshavardan Yuvaraj**
+Author: **Harshavardan Yuvaraj**
 
-**This web app is a productivity forum for people to share tips and tricks to gain command over their time and energy. Users can  create new posts, comment on existing ones, and ask questions too! Posts can be ordered from latest to most popular and filtered by flags such as hack, question, or all. Users can protect and ensure their right to edit or remove their original posts via a secret key set by them upon the posts' creation.**
+**This web app is a productivity forum for people to share tips and tricks to gain command over their time and energy. Users can  create new posts, comment on existing ones, and ask questions too! Posts can be ordered from latest to most popular and filtered by flags such as hack, question, or all. Users can protect and ensure their right to edit or remove their original posts via a passcode set by them upon the posts' creation.**
 
 ## Features
 
@@ -12,11 +12,9 @@ Created By: **Harshavardan Yuvaraj**
 - **Search Functionality:** Users can search posts by title.
 - **Comments Section:** Users can leave comments on post pages.
 - **Upvote System:** Each post has an upvote button to enable users to upvote posts.
-- **Security Measures:** Secret key set by the post creator for editing/deleting. Flags during post creation enable post filtering.
+- **Security Measures:** Passcode set by the post creator for editing/deleting. Flags during post creation enable post filtering.
 
-## Video Walkthrough
-
-Here's a walkthrough of implemented user stories:
+## Demonstration
 
 <img src='./private/Final-Project-Demo.gif' title='Video Walkthrough' width='' alt='Video Walkthrough' />
 
