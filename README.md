@@ -2,7 +2,7 @@
 
 Author: **Harshavardan Yuvaraj**
 
-**This web app is a productivity forum for people to share tips and tricks to gain command over their time and energy. Users can  create new posts, comment on existing ones, and ask questions too! Posts can be ordered from latest to most popular and filtered by flags such as hack, question, or all. Users can protect and ensure their right to edit or remove their original posts via a passcode set by them upon the posts' creation.**
+This web app is a productivity forum for people to share tips and tricks to gain command over their time and energy. Users can  create new posts, comment on existing ones, and ask questions too! Posts can be ordered from latest to most popular and filtered by flags such as hack, question, or all. Users can protect and ensure their right to edit or remove their original posts via a passcode set by them upon the posts' creation.
 
 ## Features
 
